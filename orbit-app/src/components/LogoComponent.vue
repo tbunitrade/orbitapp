@@ -9,17 +9,17 @@ export default {
       window.location.reload();
     }
   }
-};
+}
 </script>
 
 <style>
 .logo {
   width: 200px;
   height: 200px;
-  background-image: url('@/assets/img/logo-black-nobg.png');
-  background-size: cover;
+  background: url('@/assets/img/logo-black-nobg.png') no-repeat center center;
+  background-size: contain;
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 20px;
+  left: 20px;
 }
 </style>

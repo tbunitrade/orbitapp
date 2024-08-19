@@ -1,26 +1,27 @@
 <template>
-  <div class="sun" @click="showInfo"></div>
+  <div class="sun" @click="handleClick"></div>
 </template>
 
 <script>
 export default {
   methods: {
-    showInfo() {
+    handleClick() {
       this.$emit('click');
     }
   }
-};
+}
 </script>
 
-<style>
+<style scoped>
 .sun {
   width: 200px;
   height: 200px;
-  background-image: url('@/assets/img/planets/sun.jpg');
+  background: url('@/assets/img/planets/sun.jpg') no-repeat center center;
   background-size: cover;
+  border-radius: 50%;
   position: absolute;
   bottom: 0;
-  left: -45px;
-  /* Adjust styles to show 30% of the sun */
+  left: 0;
+  transform: translateX(-45%) translateY(30%);
 }
 </style>

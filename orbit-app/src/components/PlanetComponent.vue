@@ -1,55 +1,77 @@
 <template>
-  <div class="planet" @mouseover="startAnimation" @mouseleave="stopAnimation" :style="planetStyle"></div>
+  <div class="planet" @mouseover="handleMouseOver" @mouseleave="handleMouseLeave" @click="handleClick">
+    <div class="planet-name">{{ name }}</div>
+    <div class="planet-description">{{ description }}</div>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-    name: String,
-    background: String
+    name: {
+      type: String,
+      default: 'Планета'
+    },
+    description: {
+      type: String,
+      default: 'Описание планеты'
+    }
   },
   data() {
     return {
-      rotationSpeed: Math.random() * 5 + 1, // Random speed between 1 and 6
-    };
+      backgroundImages: [
+        '@/assets/img/planets/mercury.jpg',
+        '@/assets/img/planets/venus2.jpg',
+        '@/assets/img/planets/earth.jpg',
+        '@/assets/img/planets/pluto.jpg'
+      ],
+      rotationSpeed: Math.random() * (3 - 1) + 1 // Рандомная скорость от 1 до 3 секунд
+    }
   },
   computed: {
     planetStyle() {
-      // Random position along the diagonal line
-      const randomX = Math.random() * 100; // Random percentage for X
-      const randomY = Math.random() * 100; // Random percentage for Y
-
       return {
-        backgroundImage: `url(${this.background})`,
-        transform: `translate(${randomX}vw, ${randomY}vh)`,
-      };
+        backgroundImage: `url(${this.getRandomPlanetImage()})`,
+        animation: `rotate ${this.rotationSpeed}s linear infinite`
+      }
     }
   },
   methods: {
-    startAnimation() {
-      this.$el.style.animation = `rotate ${this.rotationSpeed}s linear infinite`;
-      this.$el.style.boxShadow = `0 0 10px 5px rgba(255, 255, 255, 0.8)`;
+    getRandomPlanetImage() {
+      const randomIndex = Math.floor(Math.random() * this.backgroundImages.length);
+      return this.backgroundImages[randomIndex];
     },
-    stopAnimation() {
-      this.$el.style.animation = '';
-      this.$el.style.boxShadow = '';
+    handleMouseOver() {
+      this.rotationSpeed /= 3; // Увеличение скорости вращения
+    },
+    handleMouseLeave() {
+      this.rotationSpeed *= 3; // Снижение скорости вращения
+    },
+    handleClick() {
+      this.$emit('click');
     }
   }
-};
+}
 </script>
 
-<style>
+<style scoped>
 .planet {
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  background-position: center;
   background-size: cover;
-  position: absolute;
-  /* Other styles */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  transition: box-shadow 0.5s ease;
 }
 
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.planet:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+}
+
+.planet-name,
+.planet-description {
+  color: white;
+  text-align: center;
 }
 </style>

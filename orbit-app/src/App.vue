@@ -1,17 +1,30 @@
 <template>
   <div class="universe">
     <LogoComponent />
-    <SunComponent @click="showInfo('Sun', 'дает тепло нам всем')" />
-    <PlanetComponent v-for="planet in planets" :key="planet.name" :name="planet.name" :background="planet.background" @click="showInfo(planet.name, planet.description)" />
-    <InfoComponent v-if="infoVisible" :name="infoName" :description="infoDescription" @close="infoVisible = false" />
+    <SunComponent @click="showInfo('sun')" />
+    <PlanetComponent
+      v-for="(planet, index) in planets"
+      :key="index"
+      :name="planet.name"
+      :description="planet.description"
+      :background="planet.background"
+      :style="{ top: planet.top, left: planet.left }"
+      @click="showInfo(planet.name)"
+    />
+    <InfoComponent
+      v-if="selectedObject"
+      :name="selectedObject.name"
+      :description="selectedObject.description"
+      @close="selectedObject = null"
+    />
   </div>
 </template>
 
 <script>
-import LogoComponent from './components/LogoComponent.vue';
-import SunComponent from './components/SunComponent.vue';
-import PlanetComponent from './components/PlanetComponent.vue';
-import InfoComponent from './components/InfoComponent.vue';
+import LogoComponent from './components/LogoComponent.vue'
+import SunComponent from './components/SunComponent.vue'
+import PlanetComponent from './components/PlanetComponent.vue'
+import InfoComponent from './components/InfoComponent.vue'
 
 export default {
   components: {
@@ -22,25 +35,44 @@ export default {
   },
   data() {
     return {
-      planets: [
-        { name: 'Планета_1', background: 'src/assets/img/planets/mercury.jpg', description: 'Описание планеты 1' },
-        { name: 'Планета_2', background: 'src/assets/img/planets/venus2.jpg', description: 'Описание планеты 2' },
-        { name: 'Планета_3', background: 'src/assets/img/planets/earth.jpg', description: 'Описание планеты 3' },
-        { name: 'Планета_4', background: 'src/assets/img/planets/pluto.jpg', description: 'Описание планеты 4' },
-      ],
-      infoVisible: false,
-      infoName: '',
-      infoDescription: '',
-    };
+      planets: this.generatePlanets(),
+      selectedObject: null,
+    }
   },
   methods: {
-    showInfo(name, description) {
-      this.infoName = name;
-      this.infoDescription = description;
-      this.infoVisible = true;
+    showInfo(name) {
+      if (name === 'sun') {
+        this.selectedObject = { name: 'солнце', description: 'дает тепло нам всем' }
+      } else {
+        const planet = this.planets.find(p => p.name === name)
+        this.selectedObject = planet ? { ...planet } : null
+      }
+    },
+    generatePlanets() {
+      const count = 5
+      const planets = []
+      for (let i = 0; i < count; i++) {
+        planets.push({
+          name: `Планета_${i + 1}`,
+          description: `Рандомный текст ${i + 1}`,
+          background: `src/assets/img/planets/${this.getRandomPlanetImage()}.jpg`,
+          top: this.getRandomPosition(),
+          left: this.getRandomPosition()
+        })
+      }
+      return planets
+    },
+    getRandomPlanetImage() {
+      const images = ['mercury', 'venus2', 'earth', 'pluto']
+      return images[Math.floor(Math.random() * images.length)]
+    },
+    getRandomPosition() {
+      const size = 60 // Size of the planet
+      const viewportSize = Math.max(window.innerWidth, window.innerHeight)
+      return Math.random() * (viewportSize - size) + 'px'
     }
   }
-};
+}
 </script>
 
 <style>
@@ -48,6 +80,7 @@ export default {
   width: 100vw;
   height: 100vh;
   position: relative;
-  background: black; /* For starry sky, consider using a background image or CSS animation */
+  background: url('./assets/img/stars.jpg') no-repeat center center fixed;
+  background-size: cover;
 }
 </style>
