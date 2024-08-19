@@ -1,26 +1,25 @@
 <template>
-    <div class="logo" @click="reload">
-      <img src="@/assets/img/logo-black-nobg.png" alt="Logo">
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    methods: {
-      reload() {
-        window.location.reload();
-      }
+  <div class="logo" @click="reloadPage"></div>
+</template>
+
+<script>
+export default {
+  methods: {
+    reloadPage() {
+      window.location.reload();
     }
-  };
-  </script>
-  
-  <style scoped>
-  .logo {
-    width: 200px;
-    height: 200px;
-    position: absolute;
-    top: 20px;
-    left: 20px;
   }
-  </style>
-  
+};
+</script>
+
+<style>
+.logo {
+  width: 200px;
+  height: 200px;
+  background-image: url('@/assets/img/logo-black-nobg.png');
+  background-size: cover;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+</style>

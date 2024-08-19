@@ -1,11 +1,9 @@
 <template>
   <div class="universe">
     <LogoComponent />
-    <SunComponent />
-    <div v-for="planet in planets" :key="planet.name">
-      <PlanetComponent :planet="planet" @showInfo="showInfo" />
-    </div>
-    <InfoComponent v-if="selectedPlanet" :planet="selectedPlanet" @close="selectedPlanet = null" />
+    <SunComponent @click="showInfo('Sun', 'дает тепло нам всем')" />
+    <PlanetComponent v-for="planet in planets" :key="planet.name" :name="planet.name" :background="planet.background" @click="showInfo(planet.name, planet.description)" />
+    <InfoComponent v-if="infoVisible" :name="infoName" :description="infoDescription" @close="infoVisible = false" />
   </div>
 </template>
 
@@ -16,36 +14,40 @@ import PlanetComponent from './components/PlanetComponent.vue';
 import InfoComponent from './components/InfoComponent.vue';
 
 export default {
-  data() {
-    return {
-      planets: [
-        { name: 'Планета_1', image: 'mercury.jpg', description: 'Описание Планеты 1' },
-        { name: 'Планета_2', image: 'venus2.jpg', description: 'Описание Планеты 2' },
-        { name: 'Планета_3', image: 'earth.jpg', description: 'Описание Планеты 3' },
-        { name: 'Планета_4', image: 'pluto.jpg', description: 'Описание Планеты 4' }
-      ],
-      selectedPlanet: null
-    };
-  },
-  methods: {
-    showInfo(planet) {
-      this.selectedPlanet = planet;
-    }
-  },
   components: {
     LogoComponent,
     SunComponent,
     PlanetComponent,
-    InfoComponent
+    InfoComponent,
+  },
+  data() {
+    return {
+      planets: [
+        { name: 'Планета_1', background: 'src/assets/img/planets/mercury.jpg', description: 'Описание планеты 1' },
+        { name: 'Планета_2', background: 'src/assets/img/planets/venus2.jpg', description: 'Описание планеты 2' },
+        { name: 'Планета_3', background: 'src/assets/img/planets/earth.jpg', description: 'Описание планеты 3' },
+        { name: 'Планета_4', background: 'src/assets/img/planets/pluto.jpg', description: 'Описание планеты 4' },
+      ],
+      infoVisible: false,
+      infoName: '',
+      infoDescription: '',
+    };
+  },
+  methods: {
+    showInfo(name, description) {
+      this.infoName = name;
+      this.infoDescription = description;
+      this.infoVisible = true;
+    }
   }
 };
 </script>
 
-<style scoped>
+<style>
 .universe {
   width: 100vw;
   height: 100vh;
   position: relative;
-  background: black;
+  background: black; /* For starry sky, consider using a background image or CSS animation */
 }
 </style>

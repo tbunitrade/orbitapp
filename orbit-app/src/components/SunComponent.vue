@@ -1,28 +1,26 @@
 <template>
-    <div class="sun" @click="showSunInfo"></div>
-  </template>
-  
-  <script>
-  export default {
-    methods: {
-      showSunInfo() {
-        this.$emit('showInfo', { name: 'Солнце', description: 'Дает тепло нам всем.' });
-      }
+  <div class="sun" @click="showInfo"></div>
+</template>
+
+<script>
+export default {
+  methods: {
+    showInfo() {
+      this.$emit('click');
     }
-  };
-  </script>
-  
-  <style scoped>
-  .sun {
-    width: 200px;
-    height: 200px;
-    position: absolute;
-    left: -90px; /* Чтобы было видно только 45% */
-    top: 50%;
-    transform: translateY(-50%);
-    background: url('@/assets/img/planets/sun.jpg') no-repeat center;
-    background-size: cover;
-    border-radius: 50%;
   }
-  </style>
-  
+};
+</script>
+
+<style>
+.sun {
+  width: 200px;
+  height: 200px;
+  background-image: url('@/assets/img/planets/sun.jpg');
+  background-size: cover;
+  position: absolute;
+  bottom: 0;
+  left: -45px;
+  /* Adjust styles to show 30% of the sun */
+}
+</style>
