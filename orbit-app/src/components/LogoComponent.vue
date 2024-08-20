@@ -12,14 +12,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .logo {
   width: 200px;
   height: 200px;
-  background: url('@/assets/img/logo-black-nobg.png') no-repeat center center;
-  background-size: contain;
-  position: absolute;
-  top: 20px;
-  left: 20px;
+  background: url('@/assets/img/logo-black-nobg.png') no-repeat center;
+  background-color: black;
+  cursor: pointer;
 }
 </style>

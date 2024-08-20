@@ -1,33 +1,23 @@
 <template>
-  <transition name="fade">
-    <div v-if="visible" class="info">
-      <button class="close-btn" @click="close">×</button>
+  <div class="info" v-show="visible">
+    <button @click="close">Close</button>
+    <div class="info-content">
       <h2>{{ name }}</h2>
       <p>{{ description }}</p>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
     name: String,
-    description: String
-  },
-  data() {
-    return {
-      visible: false
-    }
+    description: String,
+    visible: Boolean,
   },
   methods: {
     close() {
-      this.visible = false
-      this.$emit('close')
-    }
-  },
-  watch: {
-    '$props.name': function() {
-      this.visible = true
+      this.$emit('close');
     }
   }
 }
@@ -40,27 +30,16 @@ export default {
   left: 0;
   width: 100%;
   height: 30%;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 20px;
-  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
 }
 
-.close-btn {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
+.info-content {
+  text-align: center;
 }
 </style>
