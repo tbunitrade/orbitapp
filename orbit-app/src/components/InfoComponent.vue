@@ -1,45 +1,40 @@
 <template>
-  <div class="info" v-show="visible">
-    <button @click="close">Close</button>
-    <div class="info-content">
-      <h2>{{ name }}</h2>
-      <p>{{ description }}</p>
-    </div>
+  <div class="info" :style="infoStyle">
+    <h2>{{ name }}</h2>
+    <p>{{ description }}</p>
+    <button @click="$emit('close')">Закрыть</button>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'InfoComponent',
   props: {
     name: String,
     description: String,
-    visible: Boolean,
   },
-  methods: {
-    close() {
-      this.$emit('close');
-    }
-  }
-}
+  computed: {
+    infoStyle() {
+      return {
+        width: '100%',
+        height: '30vh',
+        position: 'absolute',
+        bottom: '0',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        color: 'white',
+        padding: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      };
+    },
+  },
+};
 </script>
 
 <style scoped>
-.info {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 30%;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.3s ease;
-}
-
-.info-content {
-  text-align: center;
+.info button {
+  margin-top: 10px;
+  padding: 10px 20px;
 }
 </style>

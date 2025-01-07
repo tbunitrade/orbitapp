@@ -1,67 +1,46 @@
 <template>
-  <div 
-    class="planet" 
-    :style="planetStyle"
-    @mouseover="handleMouseOver" 
-    @mouseleave="handleMouseLeave"
-    :title="name"
-  ></div>
+  <div class="planet-container">
+    <div class="planet" :style="planet.getPlanetStyle()" @click="$emit('click')"></div>
+  </div>
 </template>
 
 <script>
 export default {
+  name: 'PlanetComponent',  // Добавляем имя компонента
   props: {
-    background: String,
-    speed: Number,
-    name: String,
-    description: String,
-    style: Object
+    planet: Object,
   },
-  data() {
-    return {
-      rotation: 0,
-      interval: null
-    };
-  },
-  computed: {
-    planetStyle() {
-      return {
-        width: '60px',
-        height: '60px',
-        borderRadius: '50%',
-        background: `url(${this.background}) no-repeat center center`,
-        backgroundSize: 'cover',
-        position: 'absolute',
-        ...this.style
-      };
-    }
-  },
-  methods: {
-    handleMouseOver() {
-      if (this.interval) clearInterval(this.interval);
-      this.rotation = 0;
-      this.interval = setInterval(() => {
-        this.rotation += 3;
-        this.$el.style.transform = `rotate(${this.rotation}deg)`;
-      }, 1000 / this.speed);
-    },
-    handleMouseLeave() {
-      if (this.interval) clearInterval(this.interval);
-      this.$el.style.transform = `rotate(0deg)`;
-    }
-  },
-  beforeUnmount() {
-    if (this.interval) clearInterval(this.interval);
-  }
-}
+};
 </script>
 
 <style scoped>
+/*
 .planet {
   transition: box-shadow 0.3s ease;
 }
 
 .planet:hover {
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}*/
+
+.planet-container  {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.planet {
+  width: 400%;
+  height: 100%;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/332937/earth.jpg');
+  background-repeat:repeat-x;
+  background-size: contain;
+  animation: moveBackground 30s linear infinite;
+}
+@keyframes moveBackground {
+  from { transform: translateX(0); }
+  to { transform: translateX(-75%); }
 }
 </style>

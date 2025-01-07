@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Animation</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        .planet-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .planet-wrapper {
+            display: flex;
+            width: 400%; /* 2x ширина для двух элементов */
+            height: 100%;
+            animation: scrollPlanet 30s linear infinite;
+        }
+
+        .planet {
+            width: 50%; /* Половина ширины обертки */
+            height: 100%;
+            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/332937/earth.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        @keyframes scrollPlanet {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+</head>
+<body>
+<div class="planet-container">
+    <div class="planet-wrapper">
+        <div class="planet"></div>
+        <div class="planet"></div> <!-- Дублирующийся блок -->
+    </div>
+</div>
+</body>
+</html>

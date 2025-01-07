@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planet Animation</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+      overflow: hidden;
+    }
+    .planet-container {
+
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      position: relative;
+    }
+    .planet {
+      width: 200%;
+      height: 100%;
+      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/332937/earth.jpg');
+      background-repeat:repeat-x;
+      background-size: cover;
+      animation: moveBackground 30s linear infinite;
+    }
+    @keyframes moveBackground {
+      from { transform: translateX(0); }
+      to { transform: translateX(-100%); }
+    }
+  </style>
+</head>
+<body>
+<div class="planet-container">
+  <div class="planet"></div>
+</div>
+</body>
+</html>
